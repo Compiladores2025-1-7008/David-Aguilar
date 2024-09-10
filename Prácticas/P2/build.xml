@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Practica2" default="compile" basedir=".">
+
+    <property name="input" location="src/tst/prueba.txt"/>
+
+    <target name="compile" description="Genera y compila el lexer">
+
+      <exec executable="jflex" failonerror="true">
+        <arg value="src/main/jflex/Lexer.flex"/>
+      </exec>
+      
+      <mkdir dir="build"/>
+      
+      <javac srcdir="src/main/jflex"
+           destdir="build"
+           includes="Lexer.java"
+           sourcepath="src"
+           includeantruntime="false">
+      </javac>
+
+    </target>
+
+
+    <target name="run" description="Ejecuta el lexer sore el archivo de prueba">
+      
+      <java classname="main.jflex.Lexer" fork="true">
+          <classpath>
+              <pathelement location="build"/>
+          </classpath>
+          <arg file="${input}"/>  
+      </java>
+
+    </target>
+
+
+    <target name="clean" description="Limpia archivos producidos por la compilacion">
+        <delete dir="build"/>
+        <delete file="src/main/jflex/Lexer.java"/>
+        <delete file="src/main/jflex/Lexer.java~"/>
+    </target>
+</project>
